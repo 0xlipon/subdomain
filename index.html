@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Subdomain Generator </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #000;
+            color: #00ff00;
+        }
+
+        h1, h2 {
+            color: #00ff00;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #111;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            text-align: center;
+        }
+
+        label {
+            font-size: 18px;
+            margin-top: 20px;
+            display: block;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #00ff00;
+            background-color: #000;
+            color: #00ff00;
+            resize: none;
+        }
+
+        input[type="text"] {
+            height: 40px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #00ff00;
+            color: #000;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #00cc00;
+        }
+
+        .result-container {
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-bottom: 2px solid #00ff00;
+            margin-bottom: 20px;
+            background-color: #333;
+        }
+
+        .header .left a {
+            color: #00ff00;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .header .right {
+            color: #00ff00;
+            font-size: 18px;
+        }
+
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for the generated subdomains count */
+        .result-text {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Subdomain Generator</h1>
+
+        <!-- Textarea 1: Subdomains -->
+        <label for="subdomains">Subdomains:</label>
+        <textarea id="subdomains" rows="6" placeholder="Enter subdomains, one per line...">
+admin.shopify.com
+dev.shopify.com
+support.shopify.com
+        </textarea>
+
+        <!-- Textarea 2: Words -->
+        <label for="words">Words:</label>
+        <textarea id="words" rows="6" placeholder="Enter words, one per line...">
+test
+admin
+dev
+        </textarea>
+
+        <!-- Textarea 3: Mixed Subdomains -->
+        <label for="mixedSubdomains">Mixed Subdomains:</label>
+        <textarea id="mixedSubdomains" rows="10" placeholder="Generated subdomains will appear here..."></textarea>
+
+        <!-- Display the Total Mixed Subdomains Generated -->
+        <div class="result-container">
+            <span id="resultText" class="result-text">Total Mixed Subdomains Generated: 0</span>
+        </div>
+
+        <!-- Button Container -->
+        <div class="button-container">
+            <!-- Generate Button -->
+            <button align="center" onclick="generateMixedSubdomains()">Generate Mixed Subdomains</button></br>
+            <!-- Download Button -->
+            <button onclick="downloadResults()">Download as TXT</button>
+        </div>
+        <a href="https://www.linkedin.com/in/0xlipon/" target="_blank" aria-label="LinkedIn" role="link" style="display: block; margin-top: 20px;">
+   	<svg viewBox="0 0 24 24" aria-hidden="true" style="width: 30px; fill: #00ff00;">
+        <g>
+            <path d="M19.998 3A2.001 2.001 0 0022 1H2.002C.896 1 0 1.896 0 3v18c0 1.104.896 2 2.002 2H22c1.104 0 2-.896 2-2V3h-.002zM7.002 19H4.002V9h3v10zm-1.5-11.314a1.752 1.752 0 01-.002-3.504A1.752 1.752 0 015.5 7.686zm13.5 11.314h-3v-5.436c0-1.295-.026-2.96-1.804-2.96-1.806 0-2.082 1.41-2.082 2.865V19h-3V9h2.878v1.364h.042c.4-.758 1.377-1.558 2.834-1.558 3.031 0 3.591 1.993 3.591 4.585V19z"></path>
+        </g>
+    	</svg>
+	</a>
+    </div>
+    <script>
+        function generateMixedSubdomains() {
+            const subdomains = document.getElementById('subdomains').value.trim().split('\n');
+            const words = document.getElementById('words').value.trim().split('\n');
+            const mixedSubdomainsTextarea = document.getElementById('mixedSubdomains');
+            const resultText = document.getElementById('resultText');
+
+            let mixedSubdomains = '';
+            let count = 0;
+
+            // Generate all possible combinations of words and subdomains
+            words.forEach(word => {
+                subdomains.forEach(subdomain => {
+                    // Without hyphen
+                    mixedSubdomains += word.trim() + subdomain.trim() + '\n';
+                    count++;
+                    // With hyphen
+                    mixedSubdomains += word.trim() + '-' + subdomain.trim() + '\n';
+                    count++;
+                });
+            });
+
+            // Generate all possible combinations of subdomains
+            for (let i = 0; i < subdomains.length; i++) {
+                for (let j = 0; j < subdomains.length; j++) {
+                    if (i !== j) {
+                        const subdomain1 = subdomains[i].trim();
+                        const subdomain2 = subdomains[j].trim();
+                        const domain = subdomain1.split('.').slice(1).join('.');
+
+                        // Without hyphen
+                        mixedSubdomains += subdomain1.split('.')[0] + subdomain2.split('.')[0] + '.' + domain + '\n';
+                        count++;
+                        // With hyphen
+                        mixedSubdomains += subdomain1.split('.')[0] + '-' + subdomain2.split('.')[0] + '.' + domain + '\n';
+                        count++;
+                    }
+                }
+            }
+
+            // Set the generated mixed subdomains in the textarea
+            mixedSubdomainsTextarea.value = mixedSubdomains;
+
+            // Update the total mixed subdomains count text
+            resultText.textContent = 'Total Mixed Subdomains Generated: ' + count;
+        }
+
+        function downloadResults() {
+            const mixedSubdomains = document.getElementById('mixedSubdomains').value;
+            const blob = new Blob([mixedSubdomains], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'mixed_subdomains.txt';
+            link.click();
+        }
+    </script>
+</body>
+</html>
