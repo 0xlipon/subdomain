@@ -1,5 +1,5 @@
 <p align="center">
-    <b><p align="center">Cool Dorks for Hacking & Bug Bounty!</p></b>
+    <b><p align="center">Subdomain Generator Tool!</p></b>
 </p>
 
 <p align="center">
