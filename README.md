@@ -1,5 +1,3 @@
-# Subdomain Generator Tool
-
 <p align="center">
     <b><p align="center">Cool Dorks for Hacking & Bug Bounty!</p></b>
 </p>
